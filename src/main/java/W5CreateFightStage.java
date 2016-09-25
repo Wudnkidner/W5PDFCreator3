@@ -487,4 +487,7 @@ public class W5CreateFightStage {
 		fighterBlueText = txt;
 	}
 
+	public static String getRedCountry () {
+		return countryRedText;
+	}
 }

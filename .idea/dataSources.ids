@@ -43,8 +43,7 @@
         <sequence-identity>1</sequence-identity>
       </column>
       <column id="13" parent="3" name="eventname">
-        <mandatory>1</mandatory>
-        <data-type>varchar(30)</data-type>
+        <data-type>varchar(60)</data-type>
       </column>
       <column id="14" parent="3" name="place">
         <mandatory>1</mandatory>

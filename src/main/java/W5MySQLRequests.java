@@ -59,6 +59,9 @@ public class W5MySQLRequests {
         }
     }
 
+
+
+
     public static void deleteRow (String fighNumb) throws SQLException {
         Connection connection = W5MySQLConnection.getConnection();
 
