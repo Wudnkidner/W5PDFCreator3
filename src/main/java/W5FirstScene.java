@@ -10,9 +10,9 @@ public class W5FirstScene {
 		GridPane gp = new GridPane();
 		gp.setPrefSize(1024, 768);
 		gp.addRow(0, W5Buttons.setCreateTournamentBtn(stage));
-		gp.addRow(1, W5Buttons.setCreateFighterBtn(stage));
-		gp.addRow(2, W5Buttons.setCreateJudgeBtn(stage));
-		gp.addRow(3, W5Buttons.setCreateFightBtn(stage));
+		//gp.addRow(1, W5Buttons.setCreateFighterBtn(stage));
+		gp.addRow(1, W5Buttons.setCreateJudgeBtn(stage));
+		gp.addRow(2, W5Buttons.setCreateFightBtn(stage));
 		gp.setAlignment(Pos.CENTER);
 		gp.setVgap(10);
 		

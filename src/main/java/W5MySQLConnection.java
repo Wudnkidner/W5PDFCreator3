@@ -13,7 +13,7 @@ public class W5MySQLConnection {
         MysqlDataSource dataSource = new MysqlDataSource();
         dataSource.setUser("root");
         dataSource.setPassword("root");
-        dataSource.setUrl("jdbc:mysql://localhost/w5testdatabase?useLegacyDatetimeCode=false&serverTimezone=Europe/Moscow");
+        dataSource.setUrl("jdbc:mysql://localhost/w5database2?useLegacyDatetimeCode=false&serverTimezone=Europe/Moscow");
         dataSource.setPort(3306);
 
         try {
