@@ -16,8 +16,4 @@ public class W5MainApp extends Application {
 		W5FirstScene.setFirstScene(stage);
 	}
 	
-
-	
-
-	
 }

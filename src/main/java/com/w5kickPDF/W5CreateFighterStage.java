@@ -32,6 +32,7 @@ public class W5CreateFighterStage {
 
 		Scene scene = new Scene(gp);
 		stage.setScene(scene);
+                stage.setMaximized(true);
 		stage.show();
 		
 		
