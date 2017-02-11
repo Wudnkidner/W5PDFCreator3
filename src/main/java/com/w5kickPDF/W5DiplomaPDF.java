@@ -1,3 +1,6 @@
+package com.w5kickPDF;
+
+
 import com.itextpdf.kernel.color.Color;
 import com.itextpdf.kernel.color.DeviceCmyk;
 import com.itextpdf.kernel.font.PdfFont;
@@ -26,9 +29,9 @@ import java.sql.Statement;
 public class W5DiplomaPDF {
 
     private static final String FONT = System.getProperty("user.home") + "/resources/fonts/MyriadPro-BoldCond.otf";
-    private static final String FONT_NAME_DIPLOMA = System.getProperty("user.home") + "/resources/fonts/CondaraBold.ttf";
-    private static final String FONT_NAME = System.getProperty("user.home") + "/resources/fonts/OpenSans-Regular.ttf";
-    private static final String FONT_JUDGE = System.getProperty("user.home") + "/resources/fonts/OpenSans-Regular.ttf";
+    private static final String FONT_NAME_DIPLOMA = System.getProperty("user.home") + "/resources/fonts/Candara-Bold.ttf";
+    private static final String FONT_NAME = System.getProperty("user.home") + "/resources/fonts/open-sans-regular.ttf";
+    private static final String FONT_JUDGE = System.getProperty("user.home") + "/resources/fonts/open-sans-regular.ttf";
 
 
     private static final Color MYBLUE = new DeviceCmyk(70, 30, 0, 18);
@@ -56,9 +59,9 @@ public class W5DiplomaPDF {
                 case 1: fighterName = cornerBlue(fightNumb); break;
                 default: fighterName = "Error";
             }
-
+    
             String srcToDiploma = System.getProperty("user.home") + "/resources/pdf/diploma.pdf";
-            String destToDiploma = System.getProperty("user.home") + "/result/diploma/Fight" + fightNumb + ", Diploma: " + fighterName + ".pdf";
+            String destToDiploma = System.getProperty("user.home") + "/result/diploma/Fight"+ fightNumb+fighterName.replace(" ", "")+".pdf" /*+ fightNumb + ", Diploma: " + fighterName + ".pdf"*/;
 
             final String FONT = System.getProperty("user.home") + "/resources/fonts/CandaraRegular.ttf";
             PdfFont condaraRegularFont = PdfFontFactory.createFont(FONT, "Cp1251", true);
@@ -72,10 +75,10 @@ public class W5DiplomaPDF {
             PdfReader reader = new PdfReader(srcToDiploma);
             PdfWriter writer = new PdfWriter(destToDiploma);
             PdfDocument pdfDoc = new PdfDocument(reader, writer);
-
+            
             PdfPage page = pdfDoc.getPage(1);
             PdfCanvas pdfCanvas = new PdfCanvas(page);
-
+            
             Rectangle nameFighterRct = new Rectangle(260, 500, 300, 40);
             Rectangle tournamentRct = new Rectangle(205, 366, 400, 40);
             Rectangle cityRct = new Rectangle(205, 335, 400, 40);
@@ -136,7 +139,7 @@ public class W5DiplomaPDF {
             tournamentCnvs.add(tournament);
             cityCnvs.add(cityStr);
             weightCategoryCnvs.add(weightCategoryStr);
-
+            
             pdfDoc.close();
         }
 
@@ -198,8 +201,8 @@ public class W5DiplomaPDF {
 
         Connection connection = W5MySQLConnection.getConnection();
         Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT cornerred FROM Fights WHERE fightnumber = "+"'"+(fightNumb)+"'");
-        String cornerRed = null;
+        ResultSet rs = stmt.executeQuery("SELECT cornerred FROM fights WHERE fightnumber = "+"'"+(fightNumb)+"'");
+        String cornerRed = "Error";
         while(rs.next()) {
             cornerRed = rs.getString("cornerred");
         }
@@ -230,11 +233,13 @@ public class W5DiplomaPDF {
             weight = rs.getString("weight");
         }
         connection.close();
+        if (weight.matches(".")) {
         String[] filter = weight.split("\\.");
         if (filter[1].equals("0")) {
             weight = filter[0];
         } else {
             weight = filter[0]+"."+filter[1];
+        }
         }
         return weight;
     }

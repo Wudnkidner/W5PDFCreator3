@@ -1,3 +1,5 @@
+package com.w5kickPDF;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

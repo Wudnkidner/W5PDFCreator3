@@ -1,3 +1,5 @@
+package com.w5kickPDF;
+
 import com.itextpdf.kernel.color.Color;
 import com.itextpdf.kernel.color.DeviceCmyk;
 
@@ -67,7 +69,7 @@ public class W5PDFCreator {
 
 
 }
-
+/*
 class TestDrivePDF {
 
     public static void main(String[] args) throws IOException, SQLException {
@@ -86,3 +88,4 @@ class TestDrivePDF {
     }
 
 }
+*/

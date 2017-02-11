@@ -1,3 +1,5 @@
+package com.w5kickPDF;
+
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;

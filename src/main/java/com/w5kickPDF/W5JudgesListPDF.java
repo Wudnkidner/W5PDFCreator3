@@ -1,3 +1,5 @@
+package com.w5kickPDF;
+
 import com.itextpdf.kernel.color.Color;
 import com.itextpdf.kernel.color.DeviceCmyk;
 import com.itextpdf.kernel.font.PdfFont;
@@ -27,9 +29,9 @@ import java.util.ArrayList;
 public class W5JudgesListPDF {
 
     private static final String FONT = System.getProperty("user.home") + "/resources/fonts/MyriadPro-BoldCond.otf";
-    private static final String FONT_NAME_DIPLOMA = System.getProperty("user.home") + "/resources/fonts/CondaraBold.ttf";
-    private static final String FONT_NAME = System.getProperty("user.home") + "/resources/fonts/OpenSans-Regular.ttf";
-    private static final String FONT_JUDGE = System.getProperty("user.home") + "/resources/fonts/OpenSans-Regular.ttf";
+    private static final String FONT_NAME_DIPLOMA = System.getProperty("user.home") + "/resources/fonts/Candara-Bold.ttf";
+    private static final String FONT_NAME = System.getProperty("user.home") + "/resources/fonts/open-sans-regular.ttf";
+    private static final String FONT_JUDGE = System.getProperty("user.home") + "/resources/fonts/open-sans-regular.ttf";
 
 
     private static final Color MYBLUE = new DeviceCmyk(70, 30, 0, 18);
@@ -328,11 +330,13 @@ public class W5JudgesListPDF {
             weight = rs.getString("weight");
         }
         connection.close();
+        if (weight.matches(".")) {
         String[] filter = weight.split("\\.");
         if (filter[1].equals("0")) {
             weight = filter[0];
         } else {
             weight = filter[0]+"."+filter[1];
+        }
         }
         return weight;
     }

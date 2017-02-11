@@ -1,3 +1,5 @@
+package com.w5kickPDF;
+
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -12,12 +14,13 @@ import javafx.scene.input.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Objects;
 
 
 /**
  * Created by albert on 11.09.16.
  */
-public class W5SearchCountry {
+public class W5SearchWeight {
 
         public ListView createListView(final TextField txt) throws SQLException {
             final ObservableList<String> entries = FXCollections.observableArrayList();
@@ -38,7 +41,10 @@ public class W5SearchCountry {
             list.setVisible(false);
 
             // Populate the list's entries
-            entries.addAll(W5MySQLRequests.getFightersList());
+            for (double i = 45.0; i < 120.0;) {
+                entries.add(Double.toString(i));
+                i += 0.5;
+            }
 
             list.setItems( entries );
 
@@ -72,35 +78,11 @@ public class W5SearchCountry {
             list.setItems(subentries);
             newVal = newVAlClone;
 
-            if (newVal.length() > 0) {
+            if (newVal.length() > 0 && (!Objects.equals(newVal, subentries.get(0).toString()))) {
 
                 list.setPrefHeight(180);
                 list.setVisible(true);
 
-                if (newVal.length() > 6 && subentries.size() == 0) {
-                    ObservableList<String> fighter = FXCollections.observableArrayList();
-                    fighter.add("Click to add a "+ newVal +" to the database.");
-                    list.setItems(fighter);
-                    final String finalNewVal = newVal;
-                    list.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-                        public void handle(MouseEvent mouseEvent) {
-                            if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
-                                if(mouseEvent.getClickCount() == 2){
-
-                                    try {
-                                        newFighterQuery(list,finalNewVal,entries);
-                                    } catch (SQLException e) {
-                                        e.printStackTrace();
-                                    }
-                                    System.out.println("Сработала 2 команда");
-                                    list.setPrefHeight(0);
-                                    list.setVisible(false);
-                                }
-                            }
-                        }
-                    });
-                } else {
                     list.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
                         public void handle(MouseEvent mouseEvent) {
@@ -115,9 +97,7 @@ public class W5SearchCountry {
                             }
                         }
                     });
-                }
-
-            } else {
+                } else {
                 list.setPrefHeight(0);
                 list.setVisible(false);
             }
@@ -126,40 +106,8 @@ public class W5SearchCountry {
 
         }
 
-        public String getFighterText (TextField txt) {
-            String fighterText = txt.getText();
-            return fighterText;
-        }
 
-        public static void newFighterQuery (ListView list, String finalNewVal, final ObservableList<String> entries) throws SQLException {
-            Connection connection = W5MySQLConnection.getConnection();
 
-            String insertString =
-                    "INSERT INTO Fighters"+
-                            "(firstname, lastname,country,weight)" +
-                            "VALUES" +
-                            "(?,?,?,?)";
 
-            if ( connection != null) {
-                PreparedStatement preparedStmt = null;
-
-                    preparedStmt = connection.prepareStatement(insertString);
-
-                String[] nameFilter = finalNewVal.split(" ");
-                preparedStmt.setString(1, nameFilter[0]);
-                preparedStmt.setString(2, nameFilter[1]);
-                preparedStmt.setString(3, "");
-                preparedStmt.setString(4, "");
-                preparedStmt.execute();
-                connection.close();
-                entries.clear();
-
-                    entries.addAll(W5MySQLRequests.getFightersList());
-                list.setItems( entries );
-                W5CreateFightStage.setStatus("Complete");
-            } else {
-                W5CreateFightStage.setStatus("Error");
-            }
-        }
 }
 

@@ -1,3 +1,5 @@
+package com.w5kickPDF;
+
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
