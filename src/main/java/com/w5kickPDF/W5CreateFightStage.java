@@ -85,10 +85,6 @@ public class W5CreateFightStage {
 	private static final ObservableList<W5FightsData> data =
 			FXCollections.observableArrayList();
 
-
-
-
-
 	private static GridPane gridPane;
 	private static TableView<W5FightsData> tableView;
 
@@ -117,24 +113,30 @@ public class W5CreateFightStage {
 			}
 		});
 		//gridPane.setPrefSize(1280, 500);
+                gridPane.setAlignment(Pos.CENTER);
 		gridPane.setVgap(5);
 		gridPane.setHgap(10);
 		//gridPane.setPadding(new Insets(10.0));
 		//gridPane.setAlignment(Pos.TOP_CENTER);
-		gridPane.addRow(0, new Label("Event name:"), W5CreateFightStage.createTournamentCBox());
-		gridPane.addRow(1, new Label("Place:") , W5CreateFightStage.createPlaceCBox(),new Label("Date:"), W5CreateFightStage.createDateCBox());
-		gridPane.addRow(2, new Label("Fight number:"), fightNumberTF, new Label("Weight:"), weightTF);
-		gridPane.addRow(3, new Label(""), fightNumberSearch.createListView(fightNumberTF) , new Label(""), weightSearch.createListView(weightTF));
-		gridPane.addRow(4, new Label("Fighter red:"), fighterRedTF, new Label("Fighter blue:"), fighterBlueTF);
-		gridPane.addRow(5, new Label(""), fighterRedSearch.createListView(fighterRedTF) , new Label(""), fighterRedSearch.createListView(fighterBlueTF));
-		gridPane.addRow(6, new Label("Country red:"), countryRedTF, new Label("Country blue:"), countryBlueTF);
-		gridPane.addRow(7, new Label(""), countryRedSearch.createListView(countryRedTF) , new Label(""), countryBlueSearch.createListView(countryBlueTF));
-		gridPane.addRow(8, new Label("First judge:"), createJudge1CBox(), new Label("Second jdge:"),createJudge2CBox(), new Label("Third judge: "), createJudge3CBox());
-		gridPane.addRow(9, new Label("Referee:"), createRefereeCBox());
-		gridPane.addRow(10, new Label(""),createAddBtn(), createDeleteBtn(), W5Buttons.setBackBtn(stage));
+                gridPane.getColumnConstraints().add(new ColumnConstraints(74));
+                gridPane.getColumnConstraints().add(new ColumnConstraints(100));
+                gridPane.getColumnConstraints().add(new ColumnConstraints(74));
+                gridPane.getColumnConstraints().add(new ColumnConstraints(100));
+                
+                gridPane.addRow(0, W5Buttons.setBackBtn(stage));
+		gridPane.addRow(1, new Label("Event name:"), W5CreateFightStage.createTournamentCBox());
+		gridPane.addRow(2, new Label("Place:") , W5CreateFightStage.createPlaceCBox(),new Label("Date:"), W5CreateFightStage.createDateCBox());
+		gridPane.addRow(3, new Label("Fight number:"), fightNumberTF, new Label("Weight:"), weightTF);
+		gridPane.addRow(4, new Label(""), fightNumberSearch.createListView(fightNumberTF) , new Label(""), weightSearch.createListView(weightTF));
+		gridPane.addRow(5, new Label("Fighter red:"), fighterRedTF, new Label("Fighter blue:"), fighterBlueTF);
+		gridPane.addRow(6, new Label(""), fighterRedSearch.createListView(fighterRedTF) , new Label(""), fighterRedSearch.createListView(fighterBlueTF));
+		gridPane.addRow(7, new Label("Country red:"), countryRedTF, new Label("Country blue:"), countryBlueTF);
+		gridPane.addRow(8, new Label(""), countryRedSearch.createListView(countryRedTF) , new Label(""), countryBlueSearch.createListView(countryBlueTF));
+		gridPane.addRow(9, new Label("First judge:"), createJudge1CBox(), new Label("Second jdge:"),createJudge2CBox(), new Label("Third judge: "), createJudge3CBox());
+		gridPane.addRow(10, new Label("Referee:"), createRefereeCBox());
 		gridPane.addRow(11, new Label("Status: "), statusLbl);
 		gridPane.addRow(12, new Label(""),new Label(""),new Label(""),new Label(""));
-		gridPane.addRow(13, new Label(""),new Label(""),new Label(""),createMakePDFBtn());
+		gridPane.addRow(13, createAddBtn(),createDeleteBtn(),new Label(""),createMakePDFBtn());
 
 		//TableView
 		//tableView.setPrefSize(1280, 300);
@@ -283,7 +285,7 @@ public class W5CreateFightStage {
 	private static Button createAddBtn () throws SQLException {
 		Button addBtn = new Button();
 		addBtn.setPrefWidth(156);
-		addBtn.setText("Add");
+		addBtn.setText("Add Row");
 		addBtn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event)  {
@@ -311,7 +313,7 @@ public class W5CreateFightStage {
 	}
 
 	private static Button createDeleteBtn () {
-		Button addBtn = new Button("Delete");
+		Button addBtn = new Button("Delete Row");
 		addBtn.setPrefWidth(156);
 		addBtn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
