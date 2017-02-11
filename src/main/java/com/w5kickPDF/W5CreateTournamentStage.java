@@ -1,10 +1,12 @@
 package com.w5kickPDF;
 
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class W5CreateTournamentStage {
@@ -14,12 +16,14 @@ public class W5CreateTournamentStage {
 	private static TextField placeTFld = new TextField();
 	private static TextField dateTFld = new TextField();
 
-
+        private static Screen screen = Screen.getPrimary();
+        private static Rectangle2D bounds = screen.getVisualBounds();
+        
 	public static void setCreateTournamentStage (Stage stage) {
 
 
 		GridPane gp = new GridPane();
-		gp.setPrefSize(1024, 768);
+		
 
 		gp.addRow(0, new Label("Tournament name: "), tournamentTFld);
 		gp.addRow(1, new Label("City: "), cityTFld);
@@ -32,15 +36,19 @@ public class W5CreateTournamentStage {
 		gp.setAlignment(Pos.CENTER);
 		gp.setHgap(10);
 		gp.setVgap(5);
-		gp.setMinSize(1024,768);
+		//gp.setMinSize(1024,768);
 
-		gp.setStyle("-fx-padding: 10;"
-		);
+		//gp.setStyle("-fx-padding: 10;");
 
 
 		Scene scene = new Scene(gp);
 		stage.setScene(scene);
-		stage.centerOnScreen();
+                stage.setMaximized(true);
+		//stage.centerOnScreen();
+                stage.setX(bounds.getMinX());
+                stage.setY(bounds.getMinY());
+                stage.setWidth(bounds.getWidth());
+                stage.setHeight(bounds.getHeight());
 		stage.show();
 		
 		
