@@ -1,9 +1,11 @@
 package com.w5kickPDF;
 
+import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.color.Color;
 import com.itextpdf.kernel.color.DeviceCmyk;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfPage;
@@ -11,7 +13,9 @@ import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Canvas;
+import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Text;
 import com.itextpdf.layout.property.TextAlignment;
 
 import java.io.File;
@@ -28,11 +32,12 @@ import java.util.ArrayList;
 public class W5FightCardPDF {
 
     private static String src = System.getProperty("user.home") + "/resources/pdf/clear.pdf";
+    public static final String IMAGE = System.getProperty("user.home") + "/resources/pdf/clear-new.jpg";
     private static String destToFightCard;
 
 
     private static final String FONT = System.getProperty("user.home") + "/resources/fonts/MyriadPro-BoldCond.otf";
-    private static final String FONT_NAME_DIPLOMA = System.getProperty("user.home") + "/resources/fonts/Candara-Bold.ttf";
+    //private static final String FONT_NAME_DIPLOMA = System.getProperty("user.home") + "/resources/fonts/Candara-Bold.ttf";
     private static final String FONT_NAME = System.getProperty("user.home") + "/resources/fonts/open-sans-regular.ttf";
     private static final String FONT_JUDGE = System.getProperty("user.home") + "/resources/fonts/open-sans-regular.ttf";
 
@@ -115,35 +120,55 @@ public class W5FightCardPDF {
                 case 0: judgeText = firstJudgeList.get(fightNumb); break;
                 case 1: judgeText = secondJudgeList.get(fightNumb); break;
                 case 2: judgeText = thridJudgeList.get(fightNumb); break;
-                    default: judgeText = "Ошибка";
+                    default: judgeText = "Judge ERROR";
             }
       
             destToFightCard = System.getProperty("user.home") + "/result/Fight" + (fightNumb+1) + ", Judge " + judgeText + ".pdf";
             File createFightCard = new File(destToFightCard);
             createFightCard.getParentFile().mkdirs();
 
-            PdfReader reader = new PdfReader(src);
+            //PdfReader reader = new PdfReader(src);
             PdfWriter writer = new PdfWriter(destToFightCard);
-            PdfDocument pdfDoc = new PdfDocument(reader, writer);
+            PdfDocument pdfDoc = new PdfDocument(writer);
+            PageSize pageSize = new PageSize(PageSize.A4);
+            Document document = new Document(pdfDoc, pageSize);
+            
+            
+            //PdfPage page = pdfDoc.getPage(1);
+            PdfCanvas pdfCanvas = new PdfCanvas(pdfDoc.addNewPage());
+            pdfCanvas.addImage(ImageDataFactory.create(IMAGE), pageSize, true);
+            
+        
+            
+            Rectangle weightCategoryRct = new Rectangle(336, 704, 78, 40);
+            Rectangle fightNumberRct = new Rectangle(471, 704, 62, 40);
+            Rectangle tournamentRct = new Rectangle(119, 658, 188, 40);
+            Rectangle cityRct = new Rectangle(333, 658, 84, 40);
+            Rectangle dateRct = new Rectangle(446, 658, 91, 40);
+            Rectangle nameRedRct = new Rectangle(98, 607, 185, 40);
+            Rectangle nationalityRedRct = new Rectangle(125, 574, 175, 40);
+            Rectangle nameBlueRct = new Rectangle(305, 607, 183, 40);
+            Rectangle nationalityBlueRct = new Rectangle(305, 574, 153, 40);
+            Rectangle refereeRct = new Rectangle(115, 349, 258, 40);
+            Rectangle refereeNationRct = new Rectangle(407, 349, 122, 40);
+            Rectangle judgeRct = new Rectangle(115, 307, 258, 40);
+            Rectangle judgeNationRct = new Rectangle(408, 307, 122, 40);
 
-            PdfPage page = pdfDoc.getPage(1);
-            PdfCanvas pdfCanvas = new PdfCanvas(page);
-            Rectangle weightCategoryRct = new Rectangle(354, 733, 78, 40);
-            Rectangle fightNumberRct = new Rectangle(496, 733, 62, 40);
-            Rectangle tournamentRct = new Rectangle(125, 681, 188, 40);
-            Rectangle cityRct = new Rectangle(350, 683, 84, 40);
-            Rectangle dateRct = new Rectangle(470, 682, 91, 40);
-            Rectangle nameRedRct = new Rectangle(115, 621, 185, 40);
-            Rectangle nationalityRedRct = new Rectangle(125, 594, 175, 40);
-            Rectangle nameBlueRct = new Rectangle(335, 621, 183, 40);
-            Rectangle nationalityBlueRct = new Rectangle(335, 594, 153, 40);
-            Rectangle refereeRct = new Rectangle(120, 362, 258, 40);
-            Rectangle refereeNationRct = new Rectangle(430, 362, 122, 40);
-            Rectangle judgeRct = new Rectangle(120, 317, 258, 40);
-            Rectangle judgeNationRct = new Rectangle(430, 317, 122, 40);
-
+            //pdfCanvas.rectangle(weightCategoryRct);
+            //pdfCanvas.rectangle(fightNumberRct);
+            //pdfCanvas.rectangle(tournamentRct);
+            //pdfCanvas.rectangle(cityRct);
+            //pdfCanvas.rectangle(dateRct);
+            //pdfCanvas.rectangle(nameRedRct);
             //pdfCanvas.rectangle(nationalityRedRct);
-            //pdfCanvas.stroke();
+            //pdfCanvas.rectangle(nameBlueRct);
+            //pdfCanvas.rectangle(nationalityBlueRct);
+            //pdfCanvas.rectangle(refereeRct);
+            //pdfCanvas.rectangle(refereeNationRct);
+            //pdfCanvas.rectangle(judgeRct);
+            //pdfCanvas.rectangle(judgeNationRct);
+            
+            pdfCanvas.stroke();
 
             Canvas weightCategoryCnvs = new Canvas(pdfCanvas, pdfDoc, weightCategoryRct);
             Canvas fightNumberCategoryCnvs = new Canvas(pdfCanvas, pdfDoc, fightNumberRct);
@@ -167,6 +192,8 @@ public class W5FightCardPDF {
                     .setFont(font)
                     .setFontSize(15)
                     .setTextAlignment(TextAlignment.LEFT);
+            
+        
 
             Paragraph city = new Paragraph(cityText = getCity(eventNameList.get(fightNumb)))
                     .setFont(font)
@@ -246,7 +273,9 @@ public class W5FightCardPDF {
             judgeCnvs.add(judge);
             judgeNationCnvs.add(judgeNation);
 
-            pdfDoc.close();
+            //pdfDoc.close();
+            
+            document.close();
            // System.out.println("Цикл: "+ docNumb + " завершен");
         }
 
