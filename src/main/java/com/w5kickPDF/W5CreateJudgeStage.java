@@ -17,7 +17,7 @@ public class W5CreateJudgeStage {
 	public static void setCreateJudgeStage (Stage stage) {
 
 		GridPane gp = new GridPane();
-		gp.setPrefSize(1024, 768);
+		//gp.setPrefSize(1024, 768);
 		gp.setAlignment(Pos.CENTER);
 		gp.setVgap(5);
 		gp.setHgap(10);
@@ -29,6 +29,7 @@ public class W5CreateJudgeStage {
 		Scene scene = new Scene(gp);
 		stage.setScene(scene);
 		stage.centerOnScreen();
+                stage.setMaximized(true);
 		stage.show();
 		
 		

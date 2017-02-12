@@ -32,6 +32,9 @@ import java.util.ArrayList;
 
 public class W5CreateFightStage {
 
+        private static Screen screen = Screen.getPrimary();
+        private static Rectangle2D bounds = screen.getVisualBounds();
+    
 	private static TextField fighterRedTF = new TextField();
 	private static TextField fighterBlueTF = new TextField();
 	private static TextField fightNumberTF = new TextField();
@@ -82,22 +85,18 @@ public class W5CreateFightStage {
 	private static final ObservableList<W5FightsData> data =
 			FXCollections.observableArrayList();
 
-
-
-
-
 	private static GridPane gridPane;
 	private static TableView<W5FightsData> tableView;
 
 	public static void setCreateFightsStage (Stage stage) throws SQLException {
+                System.out.println(screen);
+                System.out.println(bounds);
 		data.clear();
 		gridPane = new GridPane();
 		tableView = new TableView<W5FightsData>();
 		data.addAll(W5MySQLRequests.getFightsList());
 
-
-
-		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+		//Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 
 		Scene scene = new Scene(new Group());
 		//GridPane
@@ -113,30 +112,36 @@ public class W5CreateFightStage {
 				}
 			}
 		});
-		gridPane.setPrefSize(1280, 500);
+		//gridPane.setPrefSize(1280, 500);
+                gridPane.setAlignment(Pos.CENTER);
 		gridPane.setVgap(5);
 		gridPane.setHgap(10);
-		gridPane.setPadding(new Insets(10.0));
-		gridPane.setAlignment(Pos.TOP_CENTER);
-		gridPane.addRow(0, new Label("Event name:"), W5CreateFightStage.createTournamentCBox());
-		gridPane.addRow(1, new Label("Place:") , W5CreateFightStage.createPlaceCBox(),new Label("Date:"), W5CreateFightStage.createDateCBox());
-		gridPane.addRow(2, new Label("Fight number:"), fightNumberTF, new Label("Weight:"), weightTF);
-		gridPane.addRow(3, new Label(""), fightNumberSearch.createListView(fightNumberTF) , new Label(""), weightSearch.createListView(weightTF));
-		gridPane.addRow(4, new Label("Fighter red:"), fighterRedTF, new Label("Fighter blue:"), fighterBlueTF);
-		gridPane.addRow(5, new Label(""), fighterRedSearch.createListView(fighterRedTF) , new Label(""), fighterRedSearch.createListView(fighterBlueTF));
-		gridPane.addRow(6, new Label("Country red:"), countryRedTF, new Label("Country blue:"), countryBlueTF);
-		gridPane.addRow(7, new Label(""), countryRedSearch.createListView(countryRedTF) , new Label(""), countryBlueSearch.createListView(countryBlueTF));
-		gridPane.addRow(8, new Label("First judge:"), createJudge1CBox(), new Label("Second jdge:"),createJudge2CBox(), new Label("Third judge: "), createJudge3CBox());
-		gridPane.addRow(9, new Label("Referee:"), createRefereeCBox());
-		gridPane.addRow(10, new Label(""),createAddBtn(), createDeleteBtn(), W5Buttons.setBackBtn(stage));
+		//gridPane.setPadding(new Insets(10.0));
+		//gridPane.setAlignment(Pos.TOP_CENTER);
+                gridPane.getColumnConstraints().add(new ColumnConstraints(74));
+                gridPane.getColumnConstraints().add(new ColumnConstraints(100));
+                gridPane.getColumnConstraints().add(new ColumnConstraints(74));
+                gridPane.getColumnConstraints().add(new ColumnConstraints(100));
+                
+                gridPane.addRow(0, W5Buttons.setBackBtn(stage));
+		gridPane.addRow(1, new Label("Event name:"), W5CreateFightStage.createTournamentCBox());
+		gridPane.addRow(2, new Label("Place:") , W5CreateFightStage.createPlaceCBox(),new Label("Date:"), W5CreateFightStage.createDateCBox());
+		gridPane.addRow(3, new Label("Fight number:"), fightNumberTF, new Label("Weight:"), weightTF);
+		gridPane.addRow(4, new Label(""), fightNumberSearch.createListView(fightNumberTF) , new Label(""), weightSearch.createListView(weightTF));
+		gridPane.addRow(5, new Label("Fighter red:"), fighterRedTF, new Label("Fighter blue:"), fighterBlueTF);
+		gridPane.addRow(6, new Label(""), fighterRedSearch.createListView(fighterRedTF) , new Label(""), fighterRedSearch.createListView(fighterBlueTF));
+		gridPane.addRow(7, new Label("Country red:"), countryRedTF, new Label("Country blue:"), countryBlueTF);
+		gridPane.addRow(8, new Label(""), countryRedSearch.createListView(countryRedTF) , new Label(""), countryBlueSearch.createListView(countryBlueTF));
+		gridPane.addRow(9, new Label("First judge:"), createJudge1CBox(), new Label("Second jdge:"),createJudge2CBox(), new Label("Third judge: "), createJudge3CBox());
+		gridPane.addRow(10, new Label("Referee:"), createRefereeCBox());
 		gridPane.addRow(11, new Label("Status: "), statusLbl);
 		gridPane.addRow(12, new Label(""),new Label(""),new Label(""),new Label(""));
-		gridPane.addRow(13, new Label(""),new Label(""),new Label(""),createMakePDFBtn());
+		gridPane.addRow(13, createAddBtn(),createDeleteBtn(),new Label(""),createMakePDFBtn());
 
 		//TableView
-		tableView.setPrefSize(1280, 300);
+		//tableView.setPrefSize(1280, 300);
 		tableView.setEditable(true);
-
+                
 		tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		TableColumn eventNameTC = new TableColumn("Event name");
 		eventNameTC.setMinWidth(100);
@@ -155,14 +160,14 @@ public class W5CreateFightStage {
 				new PropertyValueFactory<W5FightsData, String>("date")
 		);
 
-		TableColumn fightNumbTC = new TableColumn("Fight №");
-		fightNumbTC.setMinWidth(60);
+		TableColumn fightNumbTC = new TableColumn("Fight #");
+		fightNumbTC.setMinWidth(100);
 		fightNumbTC.setCellValueFactory(
 				new PropertyValueFactory<W5FightsData, String>("fightNumb")
 		);
 
 		TableColumn weightTC = new TableColumn("Weight");
-		weightTC.setMinWidth(60);
+		weightTC.setMinWidth(100);
 		weightTC.setCellValueFactory(
 				new PropertyValueFactory<W5FightsData, String>("weight")
 		);
@@ -218,13 +223,26 @@ public class W5CreateFightStage {
 				secondJudgeTC,thridJudgeTC,refereeTC);
 
 		final VBox vbox = new VBox();
+                
 		vbox.setSpacing(5);
-		vbox.setPadding(new Insets(10, 10, 10, 10));
+               
+                System.out.println(bounds.getWidth()/ 10);
+		vbox.setPadding(new Insets(10,10,10,bounds.getWidth()/ 10.6666));
+            
+                
 		vbox.getChildren().addAll(gridPane, tableView);
-
+                
+                
+                
 		((Group) scene.getRoot()).getChildren().addAll(vbox);
-		stage.setX((primaryScreenBounds.getMaxX()/2) - 640);
+                
+		//stage.setX((primaryScreenBounds.getMaxX()/2) - 640);
+                
+                //gridPane.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+                
 		stage.setScene(scene);
+                
+                stage.setMaximized(true);
 		stage.show();
 
 	}
@@ -267,7 +285,7 @@ public class W5CreateFightStage {
 	private static Button createAddBtn () throws SQLException {
 		Button addBtn = new Button();
 		addBtn.setPrefWidth(156);
-		addBtn.setText("Add");
+		addBtn.setText("Add Row");
 		addBtn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event)  {
@@ -295,7 +313,7 @@ public class W5CreateFightStage {
 	}
 
 	private static Button createDeleteBtn () {
-		Button addBtn = new Button("Delete");
+		Button addBtn = new Button("Delete Row");
 		addBtn.setPrefWidth(156);
 		addBtn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
