@@ -12,6 +12,7 @@ import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Canvas;
+import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
 import com.itextpdf.layout.property.TextAlignment;
@@ -27,11 +28,13 @@ import java.sql.Statement;
  * Created by albert on 02.09.16.
  */
 public class W5DiplomaPDF {
-
-    private static final String FONT = System.getProperty("user.home") + "/resources/fonts/MyriadPro-BoldCond.otf";
+    
+    //private static final File srcToDiploma = new File(W5DiplomaPDF.class.getResource("/resources/pdf").getFile());
+    //private static final String FONT = System.getProperty("user.home") + "/resources/fonts/MyriadPro-BoldCond.otf";
+    //private static final String FONT_NAME_DIPLOMA = System.getProperty("user.home") + "/resources/fonts/Candara-Bold.ttf";
     private static final String FONT_NAME_DIPLOMA = System.getProperty("user.home") + "/resources/fonts/Candara-Bold.ttf";
-    private static final String FONT_NAME = System.getProperty("user.home") + "/resources/fonts/open-sans-regular.ttf";
-    private static final String FONT_JUDGE = System.getProperty("user.home") + "/resources/fonts/open-sans-regular.ttf";
+    //private static final String FONT_NAME = System.getProperty("user.home") + "/resources/fonts/open-sans-regular.ttf";
+    //private static final String FONT_JUDGE = System.getProperty("user.home") + "/resources/fonts/open-sans-regular.ttf";
 
 
     private static final Color MYBLUE = new DeviceCmyk(70, 30, 0, 18);
@@ -59,8 +62,10 @@ public class W5DiplomaPDF {
                 case 1: fighterName = cornerBlue(fightNumb); break;
                 default: fighterName = "Error";
             }
-    
-            String srcToDiploma = System.getProperty("user.home") + "/resources/pdf/diploma.pdf";
+            
+            
+           
+            String srcToDiploma = System.getProperty("user.home") + "/resources/pdf/diploma.pdf"; 
             String destToDiploma = System.getProperty("user.home") + "/result/diploma/Fight"+ fightNumb+fighterName.replace(" ", "")+".pdf" /*+ fightNumb + ", Diploma: " + fighterName + ".pdf"*/;
 
             final String FONT = System.getProperty("user.home") + "/resources/fonts/CandaraRegular.ttf";
@@ -71,7 +76,8 @@ public class W5DiplomaPDF {
 
             File createDiploma = new File(destToDiploma);
             createDiploma.getParentFile().mkdirs();
-
+            
+           
             PdfReader reader = new PdfReader(srcToDiploma);
             PdfWriter writer = new PdfWriter(destToDiploma);
             PdfDocument pdfDoc = new PdfDocument(reader, writer);
@@ -140,7 +146,9 @@ public class W5DiplomaPDF {
             cityCnvs.add(cityStr);
             weightCategoryCnvs.add(weightCategoryStr);
             
-            pdfDoc.close();
+            //pdfDoc.close();
+            Document document = new Document(pdfDoc);
+            document.close();
         }
 
     }
